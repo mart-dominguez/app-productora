@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmPedidos">
+            <h1>Pedido</h1>
+            <h:panelGrid columns="2" rendered="#{not empty pedidosController.pedido}" >
+                <h:outputLabel for="codigo" value="Codigo"></h:outputLabel>
+                <h:inputText id="codigo" value="#{pedidosController.pedido.codigo}"></h:inputText>
+                <h:outputLabel for="valor1" value="Valor"></h:outputLabel>
+                <h:inputText  id="fecha" value="#{pedidosController.pedido.fecha}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+                </h:inputText>
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+                <h:commandButton value="Crear" action="#{pedidosController.nuevoPedido()}"></h:commandButton>
+                <h:commandButton value="Nuevo Item" action="#{pedidosController.agregarProducto()}"></h:commandButton>
+            </h:panelGrid>
+            <h2>Detalle del pedido</h2>
+            <h:panelGrid rendered="#{not empty pedidosController.detalle}" columns="2">                
+                <h:outputLabel for="nroLinea" value="Nro Linea"></h:outputLabel>
+                <h:inputText id="nroLinea" value="#{pedidosController.detalle.nroLinea}"></h:inputText>
+                <h:outputLabel for="texto" value="Descripcion"></h:outputLabel>
+                <h:inputText id="texto" value="#{pedidosController.detalle.producto}"></h:inputText>
+                <h:outputLabel for="cantidad" value="Cantidad"></h:outputLabel>
+                <h:inputText id="cantidad" value="#{pedidosController.detalle.cantidad}"></h:inputText>
+                <h:outputLabel for="precio" value="Precio"></h:outputLabel>
+                <h:inputText id="precio" value="#{pedidosController.detalle.precio}"></h:inputText>
+                <h:commandButton value="Agregar Item" action="#{pedidosController.agregarProducto()}"></h:commandButton>
+            </h:panelGrid>
+            <h:dataTable value="#{pedidosController.pedido.detalle}" var="det" rendered="#{not empty pedidosController.pedido}">
+                <h:column>
+                    <h:outputText value="#{det.nroLinea}"></h:outputText>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{det.producto}"></h:outputText>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{det.cantidad}"></h:outputText>
+                </h:column>
+                <h:column>
+                    <h:outputText value="#{det.precio}"></h:outputText>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Confirmar" action="#{pedidosController.doEnviarMensaje()}"></h:commandButton>
+        </h:form>
+    </h:body>
+</html>
+
